@@ -1,0 +1,31 @@
+# Go-related files
+bin/
+*.exe
+*.out
+*.test
+*.log
+
+# Dependency directories (Go modules)
+vendor/
+
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test binary, coverage data, and profiling files
+*.test
+*.prof
+*.cov
+
+# IDE/editor specific files
+.vscode/
+
+# macOS-specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
