@@ -2,11 +2,13 @@ package router
 
 import (
 	"net/http"
-	"quiz-app/api"
+	"quiz-app/handler"
+	"quiz-app/repository"
 )
 
-func NewRouter() *http.ServeMux {
+func NewRouter(repo repository.QuestionRepository) *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/questions", api.GetQuestions)
+	mux.HandleFunc("/questions", handler.NewQuestionHandler(repo).GetAllQuestions)
+	mux.HandleFunc("/answers", handler.NewSubmitAnswersHandler(repo).SubmitAnswers)
 	return mux
 }
