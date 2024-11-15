@@ -1,9 +1,13 @@
 package middleware
 
-import "net/http"
+import (
+	"net/http"
+	"quiz-app/logger"
+)
 
-func ApplyMiddlewares(r http.Handler) http.Handler {
+func ApplyMiddlewares(r http.Handler, log logger.Logger) http.Handler {
 	r = SecurityHeadersMiddleware(r)
-
+	r = GzipMiddleware(r)
+	r = LoggingMiddleware(r, log)
 	return r
 }
