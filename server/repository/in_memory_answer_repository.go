@@ -1,6 +1,6 @@
 package repository
 
-import "quiz-app/model"
+import "quiz-app/server/model"
 
 type memoryAnswerRepository struct {
 	answers []model.Answer

@@ -3,29 +3,24 @@ package middleware
 import (
 	"bytes"
 	"net/http"
-	"quiz-app/logger"
+	"quiz-app/server/logger"
 	"time"
 )
 
 func LoggingMiddleware(next http.Handler, log logger.Logger) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		start := time.Now()
-
-		next.ServeHTTP(w, r)
-
 		log.Info("Incoming request", map[string]interface{}{
 			"method":  r.Method,
 			"path":    r.URL.Path,
 			"headers": r.Header,
 		})
 
-		ww := &responseWriterWrapper{ResponseWriter: w}
+		ww := &responseWriterWrapper{ResponseWriter: w, statusCode: http.StatusOK}
 
-		// Serve the request
+		start := time.Now()
 		next.ServeHTTP(ww, r)
-
-		// Log the outgoing response
 		duration := time.Since(start)
+
 		log.Info("Request processed", map[string]interface{}{
 			"method":   r.Method,
 			"path":     r.URL.Path,

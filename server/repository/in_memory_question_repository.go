@@ -2,15 +2,15 @@ package repository
 
 import (
 	"errors"
-	"quiz-app/model"
+	"quiz-app/server/model"
 )
 
-type memoryQuestionRepository struct {
+type InMemoryQuestionRepository struct {
 	questions []model.Question
 }
 
-func NewMemoryQuestionRepository() QuestionRepository {
-	return &memoryQuestionRepository{
+func NewInMemoryQuestionRepository() QuestionRepository {
+	return &InMemoryQuestionRepository{
 		questions: []model.Question{
 			{
 				ID:       "a1f5a1a2-1234-4d4a-bbbb-55c1a4d3e5f6",
@@ -76,11 +76,11 @@ func NewMemoryQuestionRepository() QuestionRepository {
 	}
 }
 
-func (r *memoryQuestionRepository) GetQuestions() []model.Question {
+func (r *InMemoryQuestionRepository) GetQuestions() []model.Question {
 	return r.questions
 }
 
-func (r *memoryQuestionRepository) GetByID(id string) (*model.Question, error) {
+func (r *InMemoryQuestionRepository) GetByID(id string) (*model.Question, error) {
 	for _, question := range r.questions {
 		if question.ID == id {
 			return &question, nil

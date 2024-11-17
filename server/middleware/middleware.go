@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"net/http"
-	"quiz-app/logger"
+	"quiz-app/server/logger"
 )
 
 func ApplyMiddlewares(r http.Handler, log logger.Logger) http.Handler {

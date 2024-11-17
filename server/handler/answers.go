@@ -3,17 +3,26 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
-	"quiz-app/dto"
-	"quiz-app/repository"
+	"quiz-app/server/logger"
+	"quiz-app/server/repository"
+	"quiz-app/shared/dto"
 )
 
 type AnswerHandler struct {
-	questionRepo repository.QuestionRepository
+	questionRepo    repository.QuestionRepository
+	leaderboardRepo repository.LeaderboardRepository
+	logger          logger.Logger
 }
 
-func NewSubmitAnswersHandler(repo repository.QuestionRepository) *AnswerHandler {
+func NewSubmitAnswersHandler(
+	questionRepo repository.QuestionRepository,
+	leaderboardRepo repository.LeaderboardRepository,
+	log logger.Logger,
+) *AnswerHandler {
 	return &AnswerHandler{
-		questionRepo: repo,
+		questionRepo:    questionRepo,
+		leaderboardRepo: leaderboardRepo,
+		logger:          log,
 	}
 }
 
@@ -21,6 +30,7 @@ func (h *AnswerHandler) SubmitAnswers(w http.ResponseWriter, r *http.Request) {
 	var req dto.SubmitAnswersRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		h.logger.Error(err, "Failed to decode request payload")
 		return
 	}
 
@@ -32,6 +42,8 @@ func (h *AnswerHandler) SubmitAnswers(w http.ResponseWriter, r *http.Request) {
 			correctAnswers++
 		}
 	}
+
+	h.leaderboardRepo.SaveScore(req.Username, correctAnswers)
 
 	response := dto.SubmitAnswersResponse{
 		CorrectAnswers: correctAnswers,

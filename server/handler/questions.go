@@ -3,9 +3,9 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
-	"quiz-app/dto"
-	"quiz-app/model"
-	"quiz-app/repository"
+	"quiz-app/server/model"
+	"quiz-app/server/repository"
+	"quiz-app/shared/dto"
 )
 
 func mapToDTO(q model.Question) dto.Question {
