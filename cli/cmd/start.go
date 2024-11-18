@@ -66,4 +66,5 @@ func startQuiz() {
 	}
 
 	fmt.Printf("\nYou got %d out of %d questions correct!\n", result.CorrectAnswers, len(questions))
+	fmt.Printf("You were better than %.2f%% of all quizzers\n", result.Percentile)
 }

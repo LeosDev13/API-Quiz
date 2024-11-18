@@ -1,10 +1,9 @@
 package repository
 
-import (
-	"quiz-app/shared/dto"
-)
+import "quiz-app/server/model"
 
 type LeaderboardRepository interface {
 	SaveScore(username string, score int)
-	GetLeaderboard() []dto.LeaderboardEntry
+	GetLeaderboard() []model.LeaderboardEntry
+	GetAllScores() []int
 }

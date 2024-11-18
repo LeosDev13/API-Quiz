@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"quiz-app/shared/dto"
+	"quiz-app/server/model"
 	"sync"
 )
 
@@ -22,17 +22,29 @@ func (repo *InMemoryLeaderboardRepository) SaveScore(username string, score int)
 	repo.scores[username] = score
 }
 
-func (repo *InMemoryLeaderboardRepository) GetLeaderboard() []dto.LeaderboardEntry {
+func (repo *InMemoryLeaderboardRepository) GetLeaderboard() []model.LeaderboardEntry {
 	repo.mu.RLock()
 	defer repo.mu.RUnlock()
 
-	var leaderboard []dto.LeaderboardEntry
+	var leaderboard []model.LeaderboardEntry
 	for username, score := range repo.scores {
-		leaderboard = append(leaderboard, dto.LeaderboardEntry{
+		leaderboard = append(leaderboard, model.LeaderboardEntry{
 			Username: username,
 			Score:    score,
 		})
 	}
 
 	return leaderboard
+}
+
+func (repo *InMemoryLeaderboardRepository) GetAllScores() []int {
+	repo.mu.RLock()
+	defer repo.mu.RUnlock()
+
+	var scores []int
+	for _, score := range repo.scores {
+		scores = append(scores, score)
+	}
+
+	return scores
 }

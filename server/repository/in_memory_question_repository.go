@@ -15,7 +15,7 @@ func NewInMemoryQuestionRepository() QuestionRepository {
 			{
 				ID:       "a1f5a1a2-1234-4d4a-bbbb-55c1a4d3e5f6",
 				Question: "What does 'HTTP' stand for?",
-				Options:  []string{"HyperText Transfer Protocol", "HighText Transfer Protocol", "Hyper Transfer Text Protocol", "HyperTransfer Text Protocol"},
+				Options:  []string{"HighText Transfer Protocol", "HyperText Transfer Protocol", "Hyper Transfer Text Protocol", "HyperTransfer Text Protocol"},
 				Answer:   "HyperText Transfer Protocol",
 			},
 			{
@@ -45,7 +45,7 @@ func NewInMemoryQuestionRepository() QuestionRepository {
 			{
 				ID:       "f6i4f6e7-6789-8i9f-aaaa-00h6i9j8k0l1",
 				Question: "What symbol is used to denote comments in Python?",
-				Options:  []string{"#", "//", "/*", "!"},
+				Options:  []string{"//", "/*", "!", "#"},
 				Answer:   "#",
 			},
 			{
@@ -57,7 +57,7 @@ func NewInMemoryQuestionRepository() QuestionRepository {
 			{
 				ID:       "h8k6h8g9-8901-0k1h-cccc-22j8k1l2m3n4",
 				Question: "What does 'CSS' stand for in web development?",
-				Options:  []string{"Cascading Style Sheets", "Creative Style System", "Computer Styling Syntax", "Cascading System Styles"},
+				Options:  []string{"Creative Style System", "Computer Styling Syntax", "Cascading Style Sheets", "Cascading System Styles"},
 				Answer:   "Cascading Style Sheets",
 			},
 			{
@@ -69,7 +69,7 @@ func NewInMemoryQuestionRepository() QuestionRepository {
 			{
 				ID:       "j0m8j0i1-0123-2m3j-eeee-44l0m3n4o5p6",
 				Question: "Which data structure uses 'LIFO' order?",
-				Options:  []string{"Stack", "Queue", "Array", "Tree"},
+				Options:  []string{"Queue", "Stack", "Array", "Tree"},
 				Answer:   "Stack",
 			},
 		},

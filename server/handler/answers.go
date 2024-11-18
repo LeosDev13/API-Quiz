@@ -45,8 +45,12 @@ func (h *AnswerHandler) SubmitAnswers(w http.ResponseWriter, r *http.Request) {
 
 	h.leaderboardRepo.SaveScore(req.Username, correctAnswers)
 
+	allScores := h.leaderboardRepo.GetAllScores()
+	percentile := h.calculatePercentile(allScores, correctAnswers)
+
 	response := dto.SubmitAnswersResponse{
 		CorrectAnswers: correctAnswers,
+		Percentile:     percentile,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
@@ -54,4 +58,17 @@ func (h *AnswerHandler) SubmitAnswers(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
 		return
 	}
+}
+
+func (h *AnswerHandler) calculatePercentile(allScores []int, userScore int) float64 {
+	countLowerScores := 0
+	for _, score := range allScores {
+		if score < userScore {
+			countLowerScores++
+		}
+	}
+
+	percentile := float64(countLowerScores) / float64(len(allScores)) * 100
+	return percentile
+
 }

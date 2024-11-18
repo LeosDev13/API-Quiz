@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"quiz-app/server/logger"
+	"quiz-app/server/model"
 	"quiz-app/server/repository"
 	"quiz-app/shared/dto"
 	"sort"
@@ -12,6 +13,14 @@ import (
 type LeaderboardHandler struct {
 	leaderboardRepo repository.LeaderboardRepository
 	logger          logger.Logger
+}
+
+func mapLeaderboardEntryToDTO(l model.LeaderboardEntry) dto.LeaderboardEntry {
+	return dto.LeaderboardEntry{
+		Username: l.Username,
+		Score:    l.Score,
+		Rank:     l.Rank,
+	}
 }
 
 func NewLeaderboardHandler(repo repository.LeaderboardRepository, log logger.Logger) *LeaderboardHandler {
@@ -32,8 +41,13 @@ func (h *LeaderboardHandler) GetLeaderboard(w http.ResponseWriter, r *http.Reque
 		leaderboard[i].Rank = i + 1
 	}
 
+	var leaderboardResponse []dto.LeaderboardEntry
+	for _, l := range leaderboard {
+		leaderboardResponse = append(leaderboardResponse, mapLeaderboardEntryToDTO(l))
+	}
+
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(dto.LeaderboardResponse{Entries: leaderboard}); err != nil {
+	if err := json.NewEncoder(w).Encode(dto.LeaderboardResponse{Entries: leaderboardResponse}); err != nil {
 		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
 		h.logger.Error(err, "Failed to encode leaderboard response")
 		return
